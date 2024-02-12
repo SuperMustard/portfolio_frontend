@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {motion} from 'framer-motion';
 
+import {BallCanvas} from "../../component/canvas";
 import { AppWrap, MotionWrap } from '../../Wrapper';
 import { urlFor, client } from '../../client';
 import './Skills.scss';
@@ -37,8 +38,10 @@ const Skills = () => {
                 <div
                   className="app__flex"
                   style={{ backgroundColor: skill.bgColor }}
+                  key = {skill.name}
                 >
-                  <img src={urlFor(skill.icon)} alt={skill.name} />
+                  {/* <img src={urlFor(skill.icon)} alt={skill.name} /> */}
+                  <BallCanvas icon={urlFor(skill.icon)} />
                 </div>
                 <p className="p-text">{skill.name}</p>
               </motion.div>

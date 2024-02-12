@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {Tilt} from 'react-tilt';
 import {AiFillEye, AiFillGithub} from 'react-icons/ai';
 import {motion} from 'framer-motion';
 
@@ -58,7 +59,14 @@ const Work = () => {
         transition={{ duration: 0.5, delayChildren: 0.5 }}
         className="app__work-portfolio"
       >
-        {filterWork.map((work, index) => (
+      <Tilt
+        options={{
+          max: 10,
+          scale: 1,
+          speed: 50,
+          transition: true,
+        }}>
+      {filterWork.map((work, index) => (
           <div className="app__work-item app__flex" key={index}>
             <div
               className="app__work-img app__flex"
@@ -104,6 +112,7 @@ const Work = () => {
             </div>
           </div>
         ))}
+      </Tilt>
       </motion.div>
     </>
   )
