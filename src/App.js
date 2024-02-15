@@ -1,7 +1,8 @@
 import React from 'react'
 
-import { About, Footer, Header, Skills, Testimonial, Work } from './container';
+import { About, Footer, Header, Skills, Work } from './container';
 import { Navbar } from './component';
+import { StarsCanvas } from './component/canvas';
 import './App.scss'
 
 const App = () => {
@@ -12,7 +13,10 @@ const App = () => {
         <About />
         <Work />
         <Skills />
+        <div style={{position: 'relative', zIndex: '0'}}>
         <Footer />
+        <StarsCanvas />
+        </div>
     </div>
   )
 }
