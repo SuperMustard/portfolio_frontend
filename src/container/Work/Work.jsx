@@ -46,7 +46,7 @@ const Work = () => {
       </h2>
 
       <div className="app__work-filter">
-        {["ThreeJS", "CSS&HTML", "All"].map((item, index) => (
+        {["WebApp", "CSS&HTML", "All"].map((item, index) => (
           <div
             key={index}
             onClick={() => handleWorkFilter(item)}
@@ -64,15 +64,15 @@ const Work = () => {
         transition={{ duration: 0.5, delayChildren: 0.5 }}
         className="app__work-portfolio"
       >
-        <Tilt
-          options={{
-            max: 10,
-            scale: 1,
-            speed: 50,
-            transition: true,
-          }}
-        >
-          {filterWork.map((work, index) => (
+        {filterWork.map((work, index) => (
+          <Tilt
+            options={{
+              max: 10,
+              scale: 1,
+              speed: 50,
+              transition: true,
+            }}
+          >
             <div className="app__work-item app__flex" key={index}>
               <div className="app__work-img app__flex">
                 <img src={urlFor(work.imgUrl)} alt={work.name} />
@@ -120,8 +120,8 @@ const Work = () => {
                 </div>
               </div>
             </div>
-          ))}
-        </Tilt>
+          </Tilt>
+        ))}
       </motion.div>
     </>
   );

@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import {motion} from 'framer-motion';
-import {images} from '../../constants';
-import { AppWrap, MotionWrap } from '../../Wrapper';
-import { urlFor, client } from '../../client';
-import './About.scss';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { images } from "../../constants";
+import { AppWrap, MotionWrap } from "../../Wrapper";
+import { urlFor, client } from "../../client";
+import "./About.scss";
 
 // const abouts = [
 //   {title: 'Web Development', description: 'I am a good web developer', imgUrl: images.about01},
@@ -16,7 +16,7 @@ const About = () => {
   const [abouts, setAbouts] = useState([]);
 
   useEffect(() => {
-    const query = '*[_type == "abouts"]';
+    const query = '*[_type == "abouts"] | order(_updatedAt desc)';
 
     client.fetch(query).then((data) => {
       setAbouts(data);
@@ -25,30 +25,38 @@ const About = () => {
 
   return (
     <>
-      <h2 className='head-text'>
+      <h2 className="head-text">
         One is never too
         <span> Old</span>
-        <br/>
+        <br />
         to
         <span> Learn</span>
       </h2>
-      <div className='app__profiles'>
-        {abouts.map((about, index)=> (
+      <div className="app__profiles">
+        {abouts.map((about, index) => (
           <motion.div
-            whileInView={{opacity: 1}}
-            whileHover={{scale: 1.1}}
-            transition={{duration: 0.5, type: 'tween'}}
-            className='app__profile-item'
+            whileInView={{ opacity: 1 }}
+            whileHover={{ scale: 1.1 }}
+            transition={{ duration: 0.5, type: "tween" }}
+            className="app__profile-item"
             key={about.title + index}
           >
-            <img src={urlFor(about.imgUrl)} alt={about.title}/>
-            <h2 className="bold-text" style={{marginTop: 20}}>{about.title}</h2>
-            <p className='-text' style={{marginTop: 10}}>{about.description}</p>
+            <img src={urlFor(about.imgUrl)} alt={about.title} />
+            <h2 className="bold-text" style={{ marginTop: 20 }}>
+              {about.title}
+            </h2>
+            <p className="-text" style={{ marginTop: 10 }}>
+              {about.description}
+            </p>
           </motion.div>
         ))}
       </div>
     </>
-  )
-}
+  );
+};
 
-export default AppWrap(MotionWrap(About, 'app__about'), 'about', "app__whitebg");
+export default AppWrap(
+  MotionWrap(About, "app__about"),
+  "about",
+  "app__whitebg"
+);
