@@ -19,7 +19,6 @@ const Work = () => {
     client.fetch(query).then((data) => {
       setWorks(data);
       setFilterWork(data);
-      console.log(data);
     });
   }, []);
 
@@ -72,8 +71,9 @@ const Work = () => {
               speed: 50,
               transition: true,
             }}
+            key={index}
           >
-            <div className="app__work-item app__flex" key={index}>
+            <div className="app__work-item app__flex">
               <div className="app__work-img app__flex">
                 <img src={urlFor(work.imgUrl)} alt={work.name} />
 
@@ -127,7 +127,6 @@ const Work = () => {
   );
 };
 
-//export default AppWarp(Work, 'work');
 export default AppWrap(
   MotionWrap(Work, "app__works"),
   "work",
