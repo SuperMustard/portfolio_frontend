@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { BallCanvas } from "../../component/canvas";
 import { AppWrap, MotionWrap } from "../../Wrapper";
 import { urlFor, client } from "../../client";
+import { BrowserView, MobileView } from "react-device-detect";
 import "./Skills.scss";
 
 const Skills = () => {
@@ -36,13 +37,22 @@ const Skills = () => {
               className="app__skills-item app__flex"
               key={skill.name}
             >
-              <div
-                className="app__flex"
-                style={{ backgroundColor: skill.bgColor }}
-              >
-                {/* <img src={urlFor(skill.icon)} alt={skill.name} /> */}
-                <BallCanvas icon={urlFor(skill.icon)} />
-              </div>
+              <MobileView>
+                <div
+                  className="app__flex"
+                  style={{ backgroundColor: skill.bgColor }}
+                >
+                  <img src={urlFor(skill.icon)} alt={skill.name} />
+                </div>
+              </MobileView>
+              <BrowserView>
+                <div
+                  className="app__flex"
+                  style={{ backgroundColor: skill.bgColor }}
+                >
+                  <BallCanvas icon={urlFor(skill.icon)} />
+                </div>
+              </BrowserView>
               <p className="p-text">{skill.name}</p>
             </motion.div>
           ))}
