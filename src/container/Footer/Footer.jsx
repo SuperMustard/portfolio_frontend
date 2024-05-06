@@ -1,26 +1,69 @@
 import React, { useState } from "react";
 import { images } from "../../constants";
-import { AppWrap, MotionWrap } from "../../Wrapper";
 import { client } from "../../client";
 import "./Footer.scss";
 
 const Footer = () => {
   const [formData, setFormData] = useState({
-    name: "",
+    username: "",
     email: "",
     message: "",
   });
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const [error, setError] = useState("");
+  const [emailError, setEmailError] = useState("");
   const { username, email, message } = formData;
+
+  const [nameNoValid, setNameNoValid] = useState(false);
+  const [emailNoValid, setEmailNoValid] = useState(false);
+  const [messageNoValid, setMessageNoValid] = useState(false);
+
+  const isEmailValid = (email) => {
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return emailPattern.test(email);
+  };
 
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
+    console.log("handle input");
+    setNameNoValid(false);
+    setEmailNoValid(false);
+    setMessageNoValid(false);
     setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = () => {
+    let canContinue = true;
+
+    if (!formData.username) {
+      setNameNoValid(true);
+      setError("Field can't empty!");
+      canContinue = false;
+    }
+
+    if (!formData.email) {
+      setEmailNoValid(true);
+      setEmailError("Field can't empty!");
+      canContinue = false;
+    }
+
+    if (!formData.message) {
+      setMessageNoValid(true);
+      setError("Field can't empty!");
+      canContinue = false;
+    }
+
+    if (!canContinue) {
+      return;
+    }
+
+    if (formData.email && !isEmailValid(formData.email)) {
+      setEmailNoValid(true);
+      setEmailError("Email is not valid");
+      return;
+    }
+
     setLoading(true);
 
     const contact = {
@@ -74,6 +117,7 @@ const Footer = () => {
                 onChange={handleChangeInput}
               />
             </div>
+            {nameNoValid && <p className="app__error">{error}</p>}
             <div className="app__flex">
               <input
                 className="p-text"
@@ -84,6 +128,7 @@ const Footer = () => {
                 onChange={handleChangeInput}
               />
             </div>
+            {emailNoValid && <p className="app__error">{emailError}</p>}
             <div>
               <textarea
                 className="p-text"
@@ -93,6 +138,7 @@ const Footer = () => {
                 onChange={handleChangeInput}
               />
             </div>
+            {messageNoValid && <p className="app__error">{error}</p>}
             <button type="button" className="p-text" onClick={handleSubmit}>
               {!loading ? "Send Message" : "Sending..."}
             </button>
